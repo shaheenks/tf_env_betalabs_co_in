@@ -50,10 +50,10 @@ module "vpc-host-dev-bl101-en001" {
   source  = "terraform-google-modules/project-factory/google"
   version = "~> 12.0"
 
-  name       = "vpc-host-dev"
-  project_id = "vpc-host-dev-bl101-en001"
-  org_id     = var.org_id
-  folder_id  = google_folder.common.name
+  name                           = "vpc-host-dev"
+  project_id                     = "vpc-host-dev-bl101-en001"
+  org_id                         = var.org_id
+  folder_id                      = google_folder.common.name
   enable_shared_vpc_host_project = true
 
   billing_account = var.billing_account
@@ -86,11 +86,11 @@ module "vpc-host-dev-bl101-en001" {
 # }
 
 resource "google_project" "tf-backend-common" {
-  name="tf-backend-common"
+  name       = "tf-backend-common"
   project_id = "tf-backend-common-bl101-en001"
-  folder_id = google_folder.common.name
-  
-  skip_delete = true
+  folder_id  = google_folder.common.name
+
+  skip_delete         = true
   auto_create_network = false
 
   billing_account = var.billing_account

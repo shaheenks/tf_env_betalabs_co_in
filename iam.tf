@@ -5,7 +5,7 @@ module "organization-iam" {
   organizations = ["682729577898"]
 
   bindings = {
-    
+
     #  gcp-organization-admin roles at Organization level
 
     #  Organization Administrator
@@ -62,7 +62,7 @@ module "organization-iam" {
     # Billing Account Creator
     # Organization Viewer
 
-     "roles/billing.admin" = [
+    "roles/billing.admin" = [
       "group:gcp-billing-admins@betalabs.co.in",
     ]
 
@@ -151,7 +151,7 @@ module "organization-iam" {
     "roles/compute.viewer" = [
       "group:gcp-security-admins@betalabs.co.in"
     ]
-    
+
     #gcp-develops
 
     # Folder Viewer
@@ -170,15 +170,15 @@ module "development-iam" {
   folders = [google_folder.development.name]
 
   bindings = {
-    
+
     "roles/compute.instanceAdmin.v1" = [
       "group:gcp-developers@betalabs.co.in",
     ]
-    
+
     "roles/container.admin" = [
       "group:gcp-developers@betalabs.co.in",
     ]
-    
+
   }
 }
 
@@ -190,15 +190,15 @@ module "staging-iam" {
   folders = [google_folder.staging.name]
 
   bindings = {
-    
+
     "roles/compute.instanceAdmin.v1" = [
       "group:gcp-developers@betalabs.co.in",
     ]
-    
+
     "roles/container.admin" = [
       "group:gcp-developers@betalabs.co.in",
     ]
-    
+
   }
 }
 
@@ -207,6 +207,6 @@ module "staging-iam" {
 #   projects = [module.vpc-host-dev-bl101-en001.project_id]
 
 #   bindings = {
-    
+
 #   }
 # }

@@ -1,44 +1,44 @@
 # VPC and Subnets
 module "vpc-host-dev" {
-    source  = "terraform-google-modules/network/google"
-    version = "~> 5.0"
+  source  = "terraform-google-modules/network/google"
+  version = "~> 5.0"
 
-    project_id   = module.vpc-host-dev-bl101-en001.project_id
-    network_name = "vpc-host-dev"
+  project_id   = module.vpc-host-dev-bl101-en001.project_id
+  network_name = "vpc-host-dev"
 
-    subnets = [
-       
-        {
-            subnet_name           = "subnet-dev-asia-southeast1"
-            subnet_ip             = "192.168.10.0/24"
-            subnet_region         = "asia-southeast1"
-            subnet_private_access = false
-            subnet_flow_logs      = false
-            subnet_flow_logs_sampling = "0.5"
-            subnet_flow_logs_metadata = "INCLUDE_ALL_METADATA"
-            subnet_flow_logs_interval = "INTERVAL_10_MIN"
-        },
-        {
-            subnet_name           = "subnet-dev-us-central1"
-            subnet_ip             = "192.168.11.0/24"
-            subnet_region         = "us-central1"
-            subnet_private_access = false
-            subnet_flow_logs      = false
-            subnet_flow_logs_sampling = "0.5"
-            subnet_flow_logs_metadata = "INCLUDE_ALL_METADATA"
-            subnet_flow_logs_interval = "INTERVAL_10_MIN"
-        },
-        {
-            subnet_name           = "subnet-dev-asia-south1"
-            subnet_ip             = "192.168.12.0/24"
-            subnet_region         = "asia-south1"
-            subnet_private_access = false
-            subnet_flow_logs      = false
-            subnet_flow_logs_sampling = "0.5"
-            subnet_flow_logs_metadata = "INCLUDE_ALL_METADATA"
-            subnet_flow_logs_interval = "INTERVAL_10_MIN"
-        }
-    ]
+  subnets = [
+
+    {
+      subnet_name               = "subnet-dev-asia-southeast1"
+      subnet_ip                 = "192.168.10.0/24"
+      subnet_region             = "asia-southeast1"
+      subnet_private_access     = false
+      subnet_flow_logs          = false
+      subnet_flow_logs_sampling = "0.5"
+      subnet_flow_logs_metadata = "INCLUDE_ALL_METADATA"
+      subnet_flow_logs_interval = "INTERVAL_10_MIN"
+    },
+    {
+      subnet_name               = "subnet-dev-us-central1"
+      subnet_ip                 = "192.168.11.0/24"
+      subnet_region             = "us-central1"
+      subnet_private_access     = false
+      subnet_flow_logs          = false
+      subnet_flow_logs_sampling = "0.5"
+      subnet_flow_logs_metadata = "INCLUDE_ALL_METADATA"
+      subnet_flow_logs_interval = "INTERVAL_10_MIN"
+    },
+    {
+      subnet_name               = "subnet-dev-asia-south1"
+      subnet_ip                 = "192.168.12.0/24"
+      subnet_region             = "asia-south1"
+      subnet_private_access     = false
+      subnet_flow_logs          = false
+      subnet_flow_logs_sampling = "0.5"
+      subnet_flow_logs_metadata = "INCLUDE_ALL_METADATA"
+      subnet_flow_logs_interval = "INTERVAL_10_MIN"
+    }
+  ]
 }
 # Firewall Rules
 resource "google_compute_firewall" "vpc-host-dev-allow-iap-rdp" {
@@ -49,16 +49,16 @@ resource "google_compute_firewall" "vpc-host-dev-allow-iap-rdp" {
   priority  = 10000
 
   log_config {
-      metadata = "INCLUDE_ALL_METADATA"
-    }
+    metadata = "INCLUDE_ALL_METADATA"
+  }
 
   allow {
     protocol = "tcp"
-    ports    = ["3389",]
+    ports    = ["3389", ]
   }
 
   source_ranges = [
-  "35.235.240.0/20",
+    "35.235.240.0/20",
   ]
 }
 resource "google_compute_firewall" "vpc-host-dev-allow-iap-ssh" {
@@ -69,16 +69,16 @@ resource "google_compute_firewall" "vpc-host-dev-allow-iap-ssh" {
   priority  = 10000
 
   log_config {
-      metadata = "INCLUDE_ALL_METADATA"
-    }
+    metadata = "INCLUDE_ALL_METADATA"
+  }
 
   allow {
     protocol = "tcp"
-    ports    = ["22",]
+    ports    = ["22", ]
   }
 
   source_ranges = [
-  "35.235.240.0/20",
+    "35.235.240.0/20",
   ]
 }
 resource "google_compute_firewall" "vpc-host-dev-allow-icmp" {
@@ -89,15 +89,15 @@ resource "google_compute_firewall" "vpc-host-dev-allow-icmp" {
   priority  = 10000
 
   log_config {
-      metadata = "INCLUDE_ALL_METADATA"
-    }
+    metadata = "INCLUDE_ALL_METADATA"
+  }
 
   allow {
     protocol = "icmp"
   }
 
   source_ranges = [
-  "10.128.0.0/9",
+    "10.128.0.0/9",
   ]
 }
 # NAT Router and config
@@ -111,7 +111,7 @@ resource "google_compute_firewall" "vpc-host-dev-allow-icmp" {
 #     network_name = "vpc-host-prod"
 
 #     subnets = [
-       
+
 #         {
 #             subnet_name           = "subnet-prod-1"
 #             subnet_ip             = "192.168.1.0/24"
@@ -205,7 +205,7 @@ resource "google_compute_firewall" "vpc-host-dev-allow-icmp" {
 #     network_name = "vpc-host-staging"
 
 #     subnets = [
-       
+
 #         {
 #             subnet_name           = "subnet-staging-1"
 #             subnet_ip             = "192.168.3.0/24"
