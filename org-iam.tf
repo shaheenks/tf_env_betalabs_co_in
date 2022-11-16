@@ -1,3 +1,4 @@
+# Organization Level Admin Groups for different personas.
 module "organization-iam" {
   source  = "terraform-google-modules/iam/google//modules/organizations_iam"
   version = "~> 7.4"
@@ -161,52 +162,3 @@ module "organization-iam" {
     ]
   }
 }
-
-
-module "development-iam" {
-  source  = "terraform-google-modules/iam/google//modules/folders_iam"
-  version = "~> 7.4"
-
-  folders = [google_folder.development.name]
-
-  bindings = {
-
-    "roles/compute.instanceAdmin.v1" = [
-      "group:gcp-developers@betalabs.co.in",
-    ]
-
-    "roles/container.admin" = [
-      "group:gcp-developers@betalabs.co.in",
-    ]
-
-  }
-}
-
-
-module "staging-iam" {
-  source  = "terraform-google-modules/iam/google//modules/folders_iam"
-  version = "~> 7.4"
-
-  folders = [google_folder.staging.name]
-
-  bindings = {
-
-    "roles/compute.instanceAdmin.v1" = [
-      "group:gcp-developers@betalabs.co.in",
-    ]
-
-    "roles/container.admin" = [
-      "group:gcp-developers@betalabs.co.in",
-    ]
-
-  }
-}
-
-# module "project-vpc-host-dev-iam" {
-#   source   = "terraform-google-modules/iam/google//modules/projects_iam"
-#   projects = [module.vpc-host-dev-bl101-en001.project_id]
-
-#   bindings = {
-
-#   }
-# }
