@@ -3,11 +3,10 @@ module "org-iam-folder-viewers" {
   source  = "terraform-google-modules/iam/google//modules/organizations_iam"
   version = "~> 7.4"
 
-  organizations = ["682729577898"]
+  organizations = [ var.org_id ]
 
   bindings = {
     # Folder Viewer
-
     "roles/resourcemanager.folderViewer" = [
       "group:gcp-devops@betalabs.co.in",
       "group:gcp-developers@betalabs.co.in"
@@ -19,7 +18,7 @@ module "org-iam-gcp-organization-admins" {
   source  = "terraform-google-modules/iam/google//modules/organizations_iam"
   version = "~> 7.4"
 
-  organizations = ["682729577898"]
+  organizations = [ var.org_id ]
 
   bindings = {
         #  gcp-organization-admin roles at Organization level
@@ -54,12 +53,10 @@ module "org-iam-gcp-organization-admins" {
 
     "roles/orgpolicy.policyAdmin" = [
       "group:gcp-organization-admins@betalabs.co.in",
-      "group:gcp-security-admins@betalabs.co.in"
     ]
 
     "roles/securitycenter.admin" = [
       "group:gcp-organization-admins@betalabs.co.in",
-      "group:gcp-security-admins@betalabs.co.in"
     ]
 
     "roles/cloudsupport.admin" = [

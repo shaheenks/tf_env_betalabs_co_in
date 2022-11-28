@@ -7,7 +7,7 @@ terraform {
   }
   backend "gcs" {
     bucket = "tf-backend-betalabs-co-in"
-    prefix = "env01/00-bootstrap"
+    prefix = "env01/02-networks"
   }
 }
 
