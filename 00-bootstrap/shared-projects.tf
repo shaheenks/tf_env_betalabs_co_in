@@ -15,7 +15,8 @@ module "shared-services-project" {
     "cloudresourcemanager.googleapis.com",
     "compute.googleapis.com",
     "iam.googleapis.com",
-    "serviceusage.googleapis.com"
+    "serviceusage.googleapis.com",
+    "orgpolicy.googleapis.com"
   ]
 }
 
