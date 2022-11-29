@@ -112,3 +112,26 @@ resource "google_compute_firewall" "vpc-host-common-01-allow-icmp" {
     "10.128.0.0/9",
   ]
 }
+
+resource "google_compute_firewall" "vpc-host-commmon-allow-ssh" {
+  name      = "vpc-host-common-allow-ssh"
+  network   = module.shared-vpc-common.network_name
+  project   = var.shared-services-project
+  direction = "INGRESS"
+  priority  = 10000
+
+  log_config {
+    metadata = "INCLUDE_ALL_METADATA"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22", ]
+  }
+
+  source_ranges = [
+    "0.0.0.0/0",
+  ]
+
+  target_tags = ["allow-ssh"]
+}

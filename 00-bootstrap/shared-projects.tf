@@ -10,6 +10,13 @@ module "shared-services-project" {
   org_id = var.org_id
   folder_id=google_folder.common.name
   billing_account=var.billing_account
+
+  activate_apis = [
+    "cloudresourcemanager.googleapis.com",
+    "compute.googleapis.com",
+    "iam.googleapis.com",
+    "serviceusage.googleapis.com"
+  ]
 }
 
 # module "tf-backend-project-iam" {

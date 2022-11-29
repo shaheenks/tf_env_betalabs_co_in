@@ -15,6 +15,8 @@ provider "google" {
   # Configuration options
   project = "shared-services-env01-7fca"
   region  = "asia-south1"
+
+  user_project_override=true
 }
 
 resource "google_compute_instance" "vm_instance" {
@@ -35,6 +37,8 @@ resource "google_compute_instance" "vm_instance" {
         network_tier = "STANDARD"
     }
   }
+
+  tags = [ "allow-ssh" ]
 
   service_account {
     # default scope . https://cloud.google.com/sdk/gcloud/reference/alpha/compute/instances/set-scopes#--scopes
