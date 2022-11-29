@@ -36,7 +36,7 @@ module "tf-backend-gcs-object-editor" {
     role_id              = "tf_backend_gcs_object_editor"
     title                = "TF Backend GCS Object Editor"
     description          = "For TF backend operations on GCS"
-    permissions          = ["storage.buckets.list", "storage.objects.get", "storage.objects.create","storage.objects.delete","storage.objects.update"]
+    permissions          = ["storage.buckets.list", "storage.buckets.get", "storage.objects.create","storage.objects.delete","storage.objects.update"]
     members              = [
         "user:shaheenks@betalabs.co.in",
         "user:admin@betalabs.co.in",
