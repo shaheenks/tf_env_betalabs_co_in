@@ -39,64 +39,76 @@ module "shared-vpc-common" {
       subnet_flow_logs_interval = "INTERVAL_10_MIN"
     }
   ]
+
+  routes = [
+      {
+        name = "rt-vpc-host-nonprod-1000-egress-internet-default"
+        description = "Tag based route through IGW to access internet"
+        destination_range = "0.0.0.0/0"
+        priority = "1000"
+        next_hop_internet = "true"
+        tags = "egress-internet"
+      },
+    ]
 }
-# # # Firewall Rules
-# resource "google_compute_firewall" "vpc-host-common-01-allow-iap-rdp" {
-#   name      = "vpc-host-common-allow-iap-rdp"
-#   network   = module.shared-vpc-common.network_name
-#   project   = var.shared-services-project
-#   direction = "INGRESS"
-#   priority  = 10000
 
-#   log_config {
-#     metadata = "INCLUDE_ALL_METADATA"
-#   }
+# # Firewall Rules
+resource "google_compute_firewall" "vpc-host-common-01-allow-iap-rdp" {
+  name      = "vpc-host-common-allow-iap-rdp"
+  network   = module.shared-vpc-common.network_name
+  project   = var.shared-services-project
+  direction = "INGRESS"
+  priority  = 10000
 
-#   allow {
-#     protocol = "tcp"
-#     ports    = ["3389", ]
-#   }
+  log_config {
+    metadata = "INCLUDE_ALL_METADATA"
+  }
 
-#   source_ranges = [
-#     "35.235.240.0/20",
-#   ]
-# }
-# resource "google_compute_firewall" "vpc-host-commmon-01-allow-iap-ssh" {
-#   name      = "vpc-host-common-allow-iap-ssh"
-#   network   = module.shared-vpc-common.network_name
-#   project   = var.shared-services-project
-#   direction = "INGRESS"
-#   priority  = 10000
+  allow {
+    protocol = "tcp"
+    ports    = ["3389", ]
+  }
 
-#   log_config {
-#     metadata = "INCLUDE_ALL_METADATA"
-#   }
+  source_ranges = [
+    "35.235.240.0/20",
+  ]
+}
+resource "google_compute_firewall" "vpc-host-commmon-01-allow-iap-ssh" {
+  name      = "vpc-host-common-allow-iap-ssh"
+  network   = module.shared-vpc-common.network_name
+  project   = var.shared-services-project
+  direction = "INGRESS"
+  priority  = 10000
 
-#   allow {
-#     protocol = "tcp"
-#     ports    = ["22", ]
-#   }
+  log_config {
+    metadata = "INCLUDE_ALL_METADATA"
+  }
 
-#   source_ranges = [
-#     "35.235.240.0/20",
-#   ]
-# }
-# resource "google_compute_firewall" "vpc-host-common-01-allow-icmp" {
-#   name      = "vpc-host-common-allow-icmp"
-#   network   = module.shared-vpc-common.network_name
-#   project   = var.shared-services-project
-#   direction = "INGRESS"
-#   priority  = 10000
+  allow {
+    protocol = "tcp"
+    ports    = ["22", ]
+  }
 
-#   log_config {
-#     metadata = "INCLUDE_ALL_METADATA"
-#   }
+  source_ranges = [
+    "35.235.240.0/20",
+  ]
+}
+resource "google_compute_firewall" "vpc-host-common-01-allow-icmp" {
+  name      = "vpc-host-common-allow-icmp"
+  network   = module.shared-vpc-common.network_name
+  project   = var.shared-services-project
+  direction = "INGRESS"
+  priority  = 10000
 
-#   allow {
-#     protocol = "icmp"
-#   }
+  log_config {
+    metadata = "INCLUDE_ALL_METADATA"
+  }
 
-#   source_ranges = [
-#     "10.128.0.0/9",
-#   ]
-# }
+  allow {
+    protocol = "icmp"
+  }
+
+  source_ranges = [
+    "10.128.0.0/9",
+  ]
+}
