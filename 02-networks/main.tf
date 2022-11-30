@@ -8,6 +8,7 @@ terraform {
   backend "gcs" {
     bucket = "tf-backend-betalabs-co-in"
     prefix = "env01/02-networks"
+    impersonate_service_account = "tf-access-sa-env-admin@shared-services-env01-7fca.iam.gserviceaccount.com"
   }
 }
 

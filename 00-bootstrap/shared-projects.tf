@@ -7,6 +7,8 @@ module "shared-services-project" {
   auto_create_network = false
   enable_shared_vpc_host_project= true
 
+  # budget_amount = 5000
+
   org_id = var.org_id
   folder_id=google_folder.common.name
   billing_account=var.billing_account
@@ -16,7 +18,8 @@ module "shared-services-project" {
     "compute.googleapis.com",
     "iam.googleapis.com",
     "serviceusage.googleapis.com",
-    "orgpolicy.googleapis.com"
+    "orgpolicy.googleapis.com",
+    "billingbudgets.googleapis.com"
   ]
 }
 
@@ -26,11 +29,8 @@ module "shared-services-project" {
 #   mode="additive"
 
 #   bindings = {
-#     "roles/storage.admin" = [
-#         "user:shaheenks@betalabs.co.in",
-#         "user:admin@betalabs.co.in",
-#         "group:gcp-devops@betalabs.co.in",
-#         "group:gcp-developers@betalabs.co.in"
+#     "roles/serviceusage.serviceUsageConsumer" = [
+#       "serviceAccount:${google_service_account.tf-access-sa-org-admin.email}"
 #     ]
 #   }
 # }
@@ -41,13 +41,12 @@ module "tf-backend-gcs-object-editor" {
     target_level         = "project"
     target_id            = module.shared-services-project.project_id
     role_id              = "tf_backend_gcs_object_editor"
-    title                = "TF Backend GCS Object Editor"
+    title                = "Terraform State Administrator"
     description          = "For TF backend operations on GCS"
-    permissions          = ["storage.buckets.list", "storage.buckets.get", "storage.objects.create","storage.objects.delete","storage.objects.update"]
+    permissions          = ["storage.buckets.list", "storage.objects.list", "storage.buckets.get", "storage.objects.create","storage.objects.delete","storage.objects.update"]
     members              = [
         "user:shaheenks@betalabs.co.in",
-        "user:admin@betalabs.co.in",
-        "group:gcp-devops@betalabs.co.in",
-        "group:gcp-developers@betalabs.co.in"
+        "serviceAccount:${google_service_account.tf-access-sa-org-admin.email}",
+        "serviceAccount:${google_service_account.tf-access-sa-env-admin.email}"
     ]
 }
