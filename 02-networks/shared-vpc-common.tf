@@ -40,6 +40,18 @@ module "shared-vpc-common" {
     }
   ]
 
+  secondary_ranges = {
+    "common-us-c1" = [ {
+      ip_cidr_range = "10.0.0.0/8"
+      range_name = "common-us-c1-pods-range"
+    },
+    {
+      ip_cidr_range = "192.168.13.0/24"
+      range_name = "common-us-c1-services-range"
+    }
+    ]
+  }
+
   routes = [
       {
         name = "rt-vpc-host-nonprod-1000-egress-internet-default"

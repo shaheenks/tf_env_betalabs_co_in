@@ -18,6 +18,21 @@ module "playground-dev-project" {
   org_id = var.org_id
   folder_id=google_folder.development-folder.name
   billing_account=var.billing_account
+
+  shared_vpc_subnets = [
+  "https://www.googleapis.com/compute/v1/projects/shared-services-env01-7fca/regions/asia-south1/subnetworks/common-asia-s1",
+  "https://www.googleapis.com/compute/v1/projects/shared-services-env01-7fca/regions/asia-southeast1/subnetworks/common-asia-se1",
+  "https://www.googleapis.com/compute/v1/projects/shared-services-env01-7fca/regions/us-central1/subnetworks/common-us-c1",
+]
+
+  activate_apis = [
+    # "cloudresourcemanager.googleapis.com",
+    "compute.googleapis.com",
+    # "iam.googleapis.com",
+    # "serviceusage.googleapis.com",
+    # "billingbudgets.googleapis.com",
+    "container.googleapis.com"
+  ]
 }
 
 module "playground-dev-project-iam" {
@@ -27,13 +42,8 @@ module "playground-dev-project-iam" {
 
   bindings = {
     "roles/owner" = [
-      "user:shaheenks@betalabs.co.in"
-    ],
-    "roles/compute.networkAdmin" = [
-      "group:gcp-developers@betalabs.co.in",
-    ]
-    "roles/appengine.appAdmin" = [
-      "group:gcp-developers@betalabs.co.in",
+      "user:shaheenks@betalabs.co.in",
+      "user:admin@betalabs.co.in"
     ]
   }
 }

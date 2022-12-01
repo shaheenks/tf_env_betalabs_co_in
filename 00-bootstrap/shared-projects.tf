@@ -19,7 +19,8 @@ module "shared-services-project" {
     "iam.googleapis.com",
     "serviceusage.googleapis.com",
     "orgpolicy.googleapis.com",
-    "billingbudgets.googleapis.com"
+    "billingbudgets.googleapis.com",
+    "container.googleapis.com"
   ]
 }
 
@@ -43,7 +44,15 @@ module "tf-backend-gcs-object-editor" {
     role_id              = "tf_backend_gcs_object_editor"
     title                = "Terraform State Administrator"
     description          = "For TF backend operations on GCS"
-    permissions          = ["storage.buckets.list", "storage.objects.list", "storage.buckets.get", "storage.objects.create","storage.objects.delete","storage.objects.update"]
+    permissions          = [
+      "storage.buckets.list", 
+      "storage.objects.list", 
+      "storage.buckets.get", 
+      "storage.objects.get",
+      "storage.objects.create",
+      "storage.objects.delete",
+      "storage.objects.update"
+      ]
     members              = [
         "user:shaheenks@betalabs.co.in",
         "serviceAccount:${google_service_account.tf-access-sa-org-admin.email}",

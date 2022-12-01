@@ -65,19 +65,38 @@ module "tf-access-sa-org-iam" {
     "roles/logging.admin" = [
       "serviceAccount:${google_service_account.tf-access-sa-org-admin.email}",
     ],
-    "roles/resourcemanager.folderEditor" = [
-        "serviceAccount:${google_service_account.tf-access-sa-env-admin.email}",
-    ],
-     "roles/compute.networkAdmin" = [
+    "roles/serviceusage.serviceUsageAdmin" = [
       "serviceAccount:${google_service_account.tf-access-sa-env-admin.email}",
+    ],
+     "roles/iam.serviceAccountAdmin" = [
+      "servic,eAccount:${google_service_account.tf-access-sa-env-admin.email}",
+    ],
+     "roles/compute.xpnAdmin" = [
+      "serviceAccount:${google_service_account.tf-access-sa-env-admin.email}",
+    ],
+    "roles/compute.networkAdmin" = [
+      "serviceAccount:${google_service_account.tf-access-sa-env-admin.email}",
+    ],
+    # Permissions for tf-access-sa-env-admin
+    "roles/billing.admin" = [
+        "serviceAccount:${google_service_account.tf-access-sa-env-admin.email}",
     ],
     "roles/compute.xpnAdmin" = [
       "serviceAccount:${google_service_account.tf-access-sa-env-admin.email}",
     ],
-    "roles/compute.securityAdmin" = [
+    "roles/compute.networkAdmin" = [
       "serviceAccount:${google_service_account.tf-access-sa-env-admin.email}",
     ],
-    "roles/resourcemanager.folderViewer" = [
+     "roles/browser" = [
+      "serviceAccount:${google_service_account.tf-access-sa-env-admin.email}"
+    ],
+    "roles/resourcemanager.organizationViewer" = [
+        "serviceAccount:${google_service_account.tf-access-sa-env-admin.email}",
+    ],
+    "roles/resourcemanager.folderAdmin" = [
+        "serviceAccount:${google_service_account.tf-access-sa-env-admin.email}",
+    ],
+    "roles/resourcemanager.projectCreator" = [
       "serviceAccount:${google_service_account.tf-access-sa-env-admin.email}",
     ],
     "roles/resourcemanager.projectDeleter" = [
@@ -86,12 +105,11 @@ module "tf-access-sa-org-iam" {
     "roles/resourcemanager.projectMover" = [
       "serviceAccount:${google_service_account.tf-access-sa-env-admin.email}",
     ],
-    "roles/resourcemanager.projectDeleter" = [
+    "roles/serviceusage.serviceUsageAdmin" = [
       "serviceAccount:${google_service_account.tf-access-sa-env-admin.email}",
-    ]
-    "roles/owner" = [
+    ],
+     "roles/iam.serviceAccountAdmin" = [
       "serviceAccount:${google_service_account.tf-access-sa-env-admin.email}",
-      "serviceAccount:${google_service_account.tf-access-sa-org-admin.email}"
     ]
   }
 }
