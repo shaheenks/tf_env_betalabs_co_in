@@ -10,8 +10,9 @@ module "playground-dev-project" {
   name="playground-dev-env01"
   random_project_id = true
   auto_create_network = false
-  default_service_account = "disable"
+  # default_service_account = "disable"
   svpc_host_project_id = var.shared-services-project
+  grant_services_security_admin_role = true
 
   # budget_amount = 1000
 
@@ -47,3 +48,9 @@ module "playground-dev-project-iam" {
     ]
   }
 }
+
+resource "google_monitoring_monitored_project" "playground-dev-project-monitoring" {
+  metrics_scope="locations/global/metricScopes/${var.shared-services-project}"
+  name="locations/global/metricScopes/${var.shared-services-project}/projects/${module.playground-dev-project.project_id}"
+}
+

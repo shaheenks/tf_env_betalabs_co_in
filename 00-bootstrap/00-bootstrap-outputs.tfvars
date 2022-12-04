@@ -1,0 +1,6 @@
+common-folder = "folders/996766225301"
+shared-services-project = "shared-services-env01-7fca"
+tf-access-sa-env-admin = "tf-access-sa-env-admin@shared-services-env01-7fca.iam.gserviceaccount.com"
+tf-access-sa-org-admin = "tf-access-sa-org-admin@shared-services-env01-7fca.iam.gserviceaccount.com"
+tf-backend-gcs = "gs://tf-backend-betalabs-co-in"
+workloads-folder = "folders/416641803993"
