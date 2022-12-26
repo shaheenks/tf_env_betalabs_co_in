@@ -6,6 +6,8 @@ module "shared-vpc-common" {
   project_id   = var.shared-services-project
   network_name = "shared-vpc-common"
 
+  delete_default_internet_gateway_routes = true
+
   subnets = [
 
     {
@@ -147,3 +149,27 @@ resource "google_compute_firewall" "vpc-host-commmon-allow-ssh" {
 
   target_tags = ["allow-ssh"]
 }
+
+resource "google_compute_firewall" "vpc-host-commmon-allow-rdp" {
+  name      = "vpc-host-common-allow-rdp"
+  network   = module.shared-vpc-common.network_name
+  project   = var.shared-services-project
+  direction = "INGRESS"
+  priority  = 10000
+
+  log_config {
+    metadata = "INCLUDE_ALL_METADATA"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["3389", ]
+  }
+
+  source_ranges = [
+    "0.0.0.0/0",
+  ]
+
+  target_tags = ["allow-rdp"]
+}
+

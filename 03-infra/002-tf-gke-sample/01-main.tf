@@ -13,7 +13,7 @@ terraform {
 
 provider "google" {
   # Configuration options
-  project = "playground-dev-env01-6712"
+  project = "playground-gke-env01-b3a1"
   region  = "us-central1"
 }
 
@@ -40,7 +40,7 @@ resource "google_container_cluster" "primary" {
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
   # node pool and immediately delete it.
-  remove_default_node_pool = true
+  #remove_default_node_pool = true
   initial_node_count       = 1
 
   # networking_mode = "VPC_NATIVE"
@@ -48,8 +48,19 @@ resource "google_container_cluster" "primary" {
     cluster_secondary_range_name="common-us-c1-pods-range"
     services_secondary_range_name="common-us-c1-services-range"
   }
+
+  node_config {
+    # service_account = "973838992700-compute@developer.gserviceaccount.com"
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/devstorage.read_only",
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring",
+      "https://www.googleapis.com/auth/cloud-platform"
+    ]
+  }
   network    = "https://www.googleapis.com/compute/v1/projects/shared-services-env01-7fca/global/networks/shared-vpc-common"
-  subnetwork = "https://www.googleapis.com/compute/v1/projects/shared-services-env01-7fca/regions/us-central1/subnetworks/common-central-c1"
+  subnetwork = "https://www.googleapis.com/compute/v1/projects/shared-services-env01-7fca/regions/us-central1/subnetworks/common-us-c1"
 }
 
 # Separately Managed Node Pool
@@ -57,16 +68,19 @@ resource "google_container_node_pool" "primary_nodes" {
   name       = "${google_container_cluster.primary.name}"
   location   = "us-central1"
   cluster    = google_container_cluster.primary.name
-  node_count = var.gke_num_nodes
+  node_count = 1
 
   node_config {
     oauth_scopes = [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/devstorage.read_only",
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",
+      "https://www.googleapis.com/auth/cloud-platform"
     ]
 
     labels = {
-      env = "playground-dev-env01-6712"
+      env = "playground-gke-env01-b3a1"
     }
 
     # preemptible  = true

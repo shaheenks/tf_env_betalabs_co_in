@@ -12,3 +12,7 @@ output "playground-dev-project" {
   description = "Folder for development resources."
   value = module.playground-dev-project.project_id
 }
+
+output "playground-gke-project" {
+  value= module.playground-gke-project.project_id
+}
