@@ -2,7 +2,7 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "4.43.0"
+      version = ">=4.43.0"
     }
   }
   backend "gcs" {
@@ -14,6 +14,6 @@ terraform {
 
 provider "google" {
   # Configuration options
-  project = "shared-services-env01-7fca"
-  region  = "asia-south1"
+  # project = "shared-services-env01-7fca"
+  # region  = "asia-south1"
 }

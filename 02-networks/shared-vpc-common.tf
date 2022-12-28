@@ -66,6 +66,28 @@ module "shared-vpc-common" {
     ]
 }
 
+# NAT Router and config
+resource "google_compute_router" "router-asia-southeast1" {
+  name    = "router-asia-southeast1-common"
+  project = var.shared-services-project
+  region  = "asia-southeast1"
+  network = module.shared-vpc-common.network_self_link
+}
+
+resource "google_compute_router_nat" "router-nat-asia-southeast1" {
+  name                               = "router-nat-asia-southeast1-common"
+  router                             = google_compute_router.router-asia-southeast1.name
+  region                             = google_compute_router.router-asia-southeast1.region
+  nat_ip_allocate_option             = "AUTO_ONLY"
+  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
+
+  log_config {
+    enable = true
+    filter = "ERRORS_ONLY"
+  }
+}
+
+
 # # Firewall Rules
 resource "google_compute_firewall" "vpc-host-common-01-allow-iap-rdp" {
   name      = "vpc-host-common-allow-iap-rdp"
